@@ -97,6 +97,8 @@ print("\n[3/8] Preprocessing (aggressive leakage removal) ...")
 # CATEGORY 2: Attacker-side counters (not observable by IDS in deployment)
 # CATEGORY 3: Derived ratios that directly encode attack type
 # CATEGORY 4: Zero/near-zero variance columns
+# CATEGORY 5: Global/Network-wide metrics (unrealistic for a single-node IDS)
+# CATEGORY 6: Simulation artifacts (e.g. blackhole=0, sybil=60)
 LEAK_COLS = [
     # Category 1: Identifiers / pre-computed labels
     "event_type", "is_fake", "fake_id",
@@ -109,6 +111,17 @@ LEAK_COLS = [
     "norm_attack_rate",
     # Category 4: Zero/near-zero variance
     "avg_pkt_size_sent", "norm_pkt_size",
+    # Category 5: Global/Network-wide metrics
+    "global_beacons_sent", "global_beacons_rcvd", 
+    "global_attack_pkts", "global_dropped", "network_load",
+    # Category 6: Simulation artifacts (deterministic values for attacks)
+    "my_beacons_sent", "my_beacons_received", 
+    "beacon_send_rate", "beacon_recv_rate", 
+    "total_bytes_sent", "total_bytes_rcvd", 
+    "avg_pkt_size_rcvd", "throughput_bps", 
+    "send_recv_ratio", "active_duration", 
+    "beacon_regularity", "norm_send_rate", 
+    "norm_recv_rate", "norm_bytes_sent",
 ]
 
 # Keep car_id for group splitting but don't use it as a feature
